@@ -13,21 +13,19 @@ fun main() {
         .map { Pair(it.groupValues[1], it.groupValues[2].toInt()) }
         .toList()
 
-    println(coords.map { p -> p.apply(folds[0]) }.toSet().size)
-    folds.fold(coords) { c, f -> c.map { p -> p.apply(f) }.toSet() }.output()
+    println(coords.map { p -> p.fold(folds[0]) }.toSet().size)
+    folds.fold(coords) { c, f -> c.map { p -> p.fold(f) }.toSet() }.output()
 }
 
-fun Pair<Int, Int>.apply(fold: Pair<String, Int>): Pair<Int, Int> {
-    return Pair(
-        if (fold.first == "x") fold.second - abs(first - fold.second) else first,
-        if (fold.first == "y") fold.second - abs(second - fold.second) else second
-    )
-}
+fun Pair<Int, Int>.fold(fold: Pair<String, Int>) = Pair(
+    if (fold.first == "x") fold.second - abs(first - fold.second) else first,
+    if (fold.first == "y") fold.second - abs(second - fold.second) else second
+)
 
 fun Set<Pair<Int, Int>>.output() {
     (0..maxOf { it.second }).forEach { y ->
-        (0..maxOf { it.first }).forEach {
-                x -> print(if (contains(Pair(x, y))) "#" else ".")
+        (0..maxOf { it.first }).forEach { x ->
+            print(if (contains(Pair(x, y))) "#" else ".")
         }
         println()
     }
