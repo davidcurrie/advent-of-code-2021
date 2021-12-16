@@ -66,7 +66,7 @@ data class Bits(val input: String) {
                         fn(p1.value, p2.value)
                     )
                 }
-                .let { it.copy(length = it.length + 6) }
+                .let { it.copy(length = it.length + 6, versionSum = it.versionSum + version) }
         }
     }
 }
